@@ -32,11 +32,11 @@ steps:
   #     - '--project'
   #     - 'vanshikatesting'
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  entrypoint: 'kubectl'
-  args:
-    - 'apply'
-    - '-f'
-    - 'nginx-deployment.yaml'
+    entrypoint: 'kubectl'
+    args:
+     - 'apply'
+     - '-f'
+     - 'nginx-deployment.yaml'
 options:
   logging: CLOUD_LOGGING_ONLY
 
