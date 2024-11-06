@@ -3,6 +3,7 @@ steps:
   # Step to deploy the GKE cluster using Deployment Manager
   - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
     args:
+      - "gcloud"
       - "deployment-manager"
       - "deployments"
       - "create"
@@ -11,4 +12,3 @@ steps:
 
 options:
   logging: CLOUD_LOGGING_ONLY
-
