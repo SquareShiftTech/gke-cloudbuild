@@ -19,18 +19,18 @@ steps:
       - '--config'
       - 'gke_autopilot.yaml'  # Path to your Deployment Manager configuration
 
-  # Optional: Step 4 (if needed) to wait or verify the GKE cluster status
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'container'
-      - 'clusters'
-      - 'describe'
-      - 'autopilot-cluster-rishi'
-      - '--region'
-      - 'us-east1'
-      - '--project'
-      - 'vanshikatesting'
+  # # Optional: Step 4 (if needed) to wait or verify the GKE cluster status
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: 'gcloud'
+  #   args:
+  #     - 'container'
+  #     - 'clusters'
+  #     - 'describe'
+  #     - 'autopilot-cluster-rishi'
+  #     - '--region'
+  #     - 'us-east1'
+  #     - '--project'
+  #     - 'vanshikatesting'
 options:
   logging: CLOUD_LOGGING_ONLY
 
