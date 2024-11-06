@@ -1,14 +1,36 @@
-# cloudbuild.yaml
 steps:
-  # Step to deploy the GKE cluster using Deployment Manager
-  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
+# Step 2: Set the Google Cloud project
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
     args:
-      - "gcloud"
-      - "deployment-manager"
-      - "deployments"
-      - "create"
-      - "autopilot-cluster-deployment"  # Name of the deployment
-      - "--config=gke_autopilot.yaml"  # Path to your deployment config file
+      - 'config'
+      - 'set'
+      - 'project'
+      - 'vanshikatesting'  # Replace with your project ID
 
-options:
-  logging: CLOUD_LOGGING_ONLY
+  # Step 3: Deploy the Deployment Manager configuration to create the GKE Autopilot cluster
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'deployment-manager'
+      - 'deployments'
+      - 'create'
+      - 'autopilot-cluster-deployment'  # The name of your deployment
+      - '--config'
+      - 'gke_autopilot.yaml'  # Path to your Deployment Manager configuration
+
+  # Optional: Step 4 (if needed) to wait or verify the GKE cluster status
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'container'
+      - 'clusters'
+      - 'describe'
+      - 'autopilot-cluster-rishi'
+      - '--region'
+      - 'us-east1'
+      - '--project'
+      - 'vanshikatesting'
+
+# Timeout to prevent long-running builds from hanging
+#timeout: '600s'
