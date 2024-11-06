@@ -1,0 +1,11 @@
+# cloudbuild.yaml
+steps:
+  # Step to deploy the GKE cluster using Deployment Manager
+  - name: "gcr.io/google.com/cloudsdktool/cloud-sdk:latest"
+    args:
+      - "deployment-manager"
+      - "deployments"
+      - "create"
+      - "autopilot-cluster-deployment"  # Name of the deployment
+      - "--config=gke_autopilot.yaml"  # Path to your deployment config file
+
