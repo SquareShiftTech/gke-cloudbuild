@@ -5,7 +5,7 @@ resources:
     properties:
       parent: projects/vanshikatesting/locations/us-east1
       cluster:
-        name: autopilot-cluster-rishi
+        name: autopilot-cluster
         autopilot:
           enabled: true
         initialNodeCount: 1  # Optional, as Autopilot dynamically manages nodes
