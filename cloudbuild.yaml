@@ -31,6 +31,8 @@ steps:
       - 'us-east1'
       - '--project'
       - 'vanshikatesting'
+options:
+  logging: CLOUD_LOGGING_ONLY
 
 # Timeout to prevent long-running builds from hanging
 #timeout: '600s'
