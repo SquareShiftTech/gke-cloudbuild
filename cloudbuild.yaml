@@ -8,4 +8,4 @@ steps:
       - "create"
       - "autopilot-cluster-deployment"  # Name of the deployment
       - "--config=gke_autopilot.yaml"  # Path to your deployment config file
-
+logging: CLOUD_LOGGING_ONLY
