@@ -18,38 +18,25 @@ steps:
       - 'autopilot-cluster-deployment'  # The name of your deployment
       - '--config'
       - 'gke_autopilot.yaml'  # Path to your Deployment Manager configuration
+- name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'container'
+      - 'clusters'
+      - 'get-credentials'
+      - 'autopilot-cluster'  # Replace with your GKE Autopilot cluster name
+      - '--region'
+      - 'us-east1'        # Replace with the region of your GKE Autopilot cluster
+      - '--project'
+      - 'vanshikatesting' # Replace with your project ID
 
-  # # Optional: Step 4 (if needed) to wait or verify the GKE cluster status
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'gcloud'
-  #   args:
-  #     - 'container'
-  #     - 'clusters'
-  #     - 'describe'
-  #     - 'autopilot-cluster-rishi'
-  #     - '--region'
-  #     - 'us-east1'
-  #     - '--project'
-  #     - 'vanshikatesting'
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'gcloud'
-  #   args:
-  #     - 'container'
-  #     - 'clusters'
-  #     - 'get-credentials'
-  #     - 'autopilot-cluster-deployment'  # Replace with your cluster name
-  #     - '--region'
-  #     - 'us-east1'  # Replace with your region
-  #     - '--project'
-  #     - 'vanshikatesting'
-
-  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-  #   entrypoint: 'kubectl'
-  #   args:
-  #    - 'apply'
-  #    - '-f'
-  #    - 'nginx-deployment.yaml'
-options:
+  # Step 5: Deploy Nginx using kubectl
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'kubectl'
+    args:
+      - 'apply'
+      - '-f'
+      - 'nginx-deployment.yaml'
   logging: CLOUD_LOGGING_ONLY
 
 # Timeout to prevent long-running builds from hanging
