@@ -1,5 +1,5 @@
 steps:
-  # Step 2: Set the Google Cloud project
+  # Step 1: Set the Google Cloud project
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -7,8 +7,20 @@ steps:
       - 'set'
       - 'project'
       - 'vanshikatesting'  # Replace with your project ID
-
-  # Step 3: Deploy the Deployment Manager configuration to create the GKE Autopilot cluster
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        # Check if the GKE Autopilot cluster deployment exists
+        if gcloud deployment-manager deployments describe autopilot-cluster-deployment --quiet; then
+          echo "Deployment already exists. Skipping cluster creation."
+        else
+          echo "Deployment not found. Proceeding with cluster creation."
+          exit 1
+        fi
+      
+ # Step 2: Deploy the Deployment Manager configuration to create the GKE Autopilot cluster
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -19,7 +31,7 @@ steps:
       - '--config'
       - 'gke_autopilot.yaml'  # Path to your Deployment Manager configuration
 
-  # Step 4: Get credentials for the GKE Autopilot cluster
+  # Step 3: Get credentials for the GKE Autopilot cluster
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -32,7 +44,7 @@ steps:
       - '--project'
       - 'vanshikatesting'    # Replace with your project ID
 
-  # Step 5: Deploy Nginx using kubectl
+  # Step 4: Deploy Nginx using kubectl
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'kubectl'
     args:
