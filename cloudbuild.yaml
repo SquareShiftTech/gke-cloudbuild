@@ -7,20 +7,24 @@ steps:
       - 'set'
       - 'project'
       - 'vanshikatesting'  # Replace with your project ID
+
+  # Step 1.5: Check if the GKE Autopilot cluster deployment exists
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
+    id: 'check-cluster'
     args:
       - '-c'
       - |
         # Check if the GKE Autopilot cluster deployment exists
         if gcloud deployment-manager deployments describe autopilot-cluster-deployment --quiet; then
           echo "Deployment already exists. Skipping cluster creation."
+          exit 0
         else
           echo "Deployment not found. Proceeding with cluster creation."
           exit 1
         fi
-      
- # Step 2: Deploy the Deployment Manager configuration to create the GKE Autopilot cluster
+
+  # Step 2: Deploy the Deployment Manager configuration to create the GKE Autopilot cluster (conditionally)
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'gcloud'
     args:
@@ -30,6 +34,9 @@ steps:
       - 'autopilot-cluster-deployment'  # The name of your deployment
       - '--config'
       - 'gke_autopilot.yaml'  # Path to your Deployment Manager configuration
+    # Only run this step if the previous check failed (exit code 1)
+    waitFor:
+      - 'check-cluster'
 
   # Step 3: Get credentials for the GKE Autopilot cluster
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
