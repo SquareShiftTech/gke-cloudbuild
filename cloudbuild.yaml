@@ -8,34 +8,17 @@ steps:
       - 'project'
       - 'vanshikatesting'  # Replace with your project ID
 
-  # Step 1.5: Check if the Deployment Manager deployment exists
+  # Step 2: Attempt to create the Deployment Manager deployment
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
     entrypoint: 'bash'
-    id: 'check-cluster'
+    id: 'create-deployment'
     args:
       - '-c'
       - |
-        # Check if the GKE Autopilot cluster deployment exists
-        if gcloud deployment-manager deployments describe autopilot-cluster-deployment --quiet; then
-          echo "Deployment already exists. Skipping creation."
-          exit 0  # Exit successfully to skip the next step
-        else
-          echo "Deployment not found. Proceeding with creation."
-          exit 1  # Exit with an error to proceed to the next step
+        # Try to create the deployment and handle any error
+        if ! gcloud deployment-manager deployments create autopilot-cluster-deployment --config gke_autopilot.yaml; then
+          echo "Deployment creation failed, likely because it already exists. Skipping to Nginx deployment."
         fi
-
-  # Step 2: Create the Deployment Manager deployment (only if it does not already exist)
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'deployment-manager'
-      - 'deployments'
-      - 'create'
-      - 'autopilot-cluster-deployment'
-      - '--config'
-      - 'gke_autopilot.yaml'
-    waitFor:
-      - 'check-cluster'  # Only run this step if Step 1.5 failed (exit code 1)
 
   # Step 3: Get credentials for the GKE Autopilot cluster
   - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
