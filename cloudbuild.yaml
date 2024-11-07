@@ -31,24 +31,24 @@ steps:
   #     - 'us-east1'
   #     - '--project'
   #     - 'vanshikatesting'
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'gcloud'
-    args:
-      - 'container'
-      - 'clusters'
-      - 'get-credentials'
-      - 'autopilot-cluster-deployment'  # Replace with your cluster name
-      - '--region'
-      - 'us-east1'  # Replace with your region
-      - '--project'
-      - 'vanshikatesting'
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: 'gcloud'
+  #   args:
+  #     - 'container'
+  #     - 'clusters'
+  #     - 'get-credentials'
+  #     - 'autopilot-cluster-deployment'  # Replace with your cluster name
+  #     - '--region'
+  #     - 'us-east1'  # Replace with your region
+  #     - '--project'
+  #     - 'vanshikatesting'
 
-  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
-    entrypoint: 'kubectl'
-    args:
-     - 'apply'
-     - '-f'
-     - 'nginx-deployment.yaml'
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: 'kubectl'
+  #   args:
+  #    - 'apply'
+  #    - '-f'
+  #    - 'nginx-deployment.yaml'
 options:
   logging: CLOUD_LOGGING_ONLY
 
