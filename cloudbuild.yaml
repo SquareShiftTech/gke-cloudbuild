@@ -29,7 +29,7 @@ steps:
       - 'get-credentials'
       - 'autopilot-cluster'
       - '--region'
-      - 'us-west1'
+      - 'us-east1'
       - '--project'
       - 'vanshikatesting'
 
