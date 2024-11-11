@@ -7,6 +7,6 @@ resources:
       cluster:
         name: autopilot-cluster
         autopilot:
-          enabled: true
+          enabled: false
         initialNodeCount: 1  # Optional, as Autopilot dynamically manages nodes
 
