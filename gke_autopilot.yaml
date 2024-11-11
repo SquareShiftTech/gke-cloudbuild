@@ -1,11 +1,11 @@
 # gke_autopilot.yaml
 resources:
-  - name: standalone-cluster
+  - name: autopilot-cluster
     type: gcp-types/container-v1beta1:projects.locations.clusters
     properties:
       parent: projects/vanshikatesting/locations/us-west1
       cluster:
-        name: standalone-cluster
+        name: autopilot-cluster
         autopilot:
           enabled: false
         initialNodeCount: 1  # Optional, as Autopilot dynamically manages nodes
